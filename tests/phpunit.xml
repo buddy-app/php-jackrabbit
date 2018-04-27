@@ -1,0 +1,15 @@
+<phpunit bootstrap="./../vendor/autoload.php">
+    <php>
+        <server name="KERNEL_DIR" value="/opt/project" />
+    </php>
+    <testsuites>
+        <testsuite>
+            <directory>./</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./../src</directory>
+        </whitelist>
+    </filter>
+</phpunit>

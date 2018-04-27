@@ -1,0 +1,34 @@
+{
+    "name": "buddy-app/php-jackrabbit",
+    "description": "A soap-/rest-like rabbitmq client based on php-amqplib",
+    "keywords": ["rabbitmq", "client", "soap", "rest"],
+    "license": "proprietary",
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "php-amqplib/php-amqplib": "2.7.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jackrabbit\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ],
+        "psr-4": {
+            "Jackrabbit\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
