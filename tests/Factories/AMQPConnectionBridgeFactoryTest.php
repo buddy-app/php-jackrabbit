@@ -38,10 +38,6 @@ class AMQPConnectionBridgeFactoryTest extends TestCase
         $this->factory = new AMQPConnectionBridgeFactory($this->connectionParameters);
     }
 
-    public function testCanBeInstantiated(){
-        $this->assertInstanceOf(AMQPConnectionBridgeFactory::class, $this->factory);
-    }
-
     public function testFactoryReturnsAnInstanceOfAMQPConnectionBridge(){
         $this->assertInstanceOf(
             AMQPConnectionBridge::class,
