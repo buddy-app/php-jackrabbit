@@ -62,6 +62,10 @@ class ConnectionParametersFactoryTest extends TestCase
             ['ampq://', '', '', '', '', ''],
             ['amqp://', '', '', '', '', ''],
             ['amqp://[::1]', '', '', '[::1]', '', ''],
+            ['amqp://mr:x@', 'mr', 'x', '', '', ''],
+            ['amqp://mrs:y@rabbitmqserver', 'mrs', 'y', 'rabbitmqserver', '', ''],
+            ['amqp://mrss:yy@rabbitmrserver:', 'mrss', 'yy', 'rabbitmrserver', '', ''],
+            ['amqp://mrss:yy@rabbitmrserver:54321', 'mrss', 'yy', 'rabbitmrserver', '54321', ''],
         ];
     }
 }
