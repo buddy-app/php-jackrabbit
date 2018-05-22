@@ -20,6 +20,11 @@ class Client
     private $connectionBridgeFactory;
 
     /**
+     * @var string
+     */
+    private $lastMethod;
+
+    /**
      * @param AMQPConnectionBridgeFactory $connectionBridgeFactory
      */
     public function __construct(AMQPConnectionBridgeFactory $connectionBridgeFactory)
@@ -27,5 +32,22 @@ class Client
         $this->connectionBridgeFactory = $connectionBridgeFactory;
 
         $this->connectionBridge = $connectionBridgeFactory->build();
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $arguments
+     */
+    public function __call($name, $arguments)
+    {
+        $this->lastMethod = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastMethod()
+    {
+        return $this->lastMethod;
     }
 }

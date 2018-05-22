@@ -30,4 +30,9 @@ class ClientTest extends TestCase
     public function testClientCallsConnectionBridgeFactory(){
         $this->assertSame(1, $this->connectionBridgeFactorySpy->getNumberOfBuildCalls());
     }
+
+    public function testClientReturnsLastMethodFromClientCall() {
+        $this->client->fooBarBaz();
+        $this->assertSame('fooBarBaz', $this->client->getLastMethod());
+    }
 }
