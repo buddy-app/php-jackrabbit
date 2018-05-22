@@ -12,15 +12,23 @@ class AMQPConnectionBridgeSpy extends AMQPConnectionBridge
      */
     private $channel;
 
-    public function __construct(AMQPChannel $channel)
-    {
-        $this->channel = $channel;
-    }
-
     /**
      * @var int
      */
     private $numberOfChannelCalls = 0;
+
+    /**
+     * @var int
+     */
+    private $numberOfCloseCalls = 0;
+
+    /**
+     * @param AMQPChannel $channel
+     */
+    public function __construct(AMQPChannel $channel)
+    {
+        $this->channel = $channel;
+    }
 
     /**
      * @return null
@@ -32,11 +40,24 @@ class AMQPConnectionBridgeSpy extends AMQPConnectionBridge
         return $this->channel;
     }
 
+    public function close()
+    {
+        $this->numberOfCloseCalls++;
+    }
+
     /**
      * @return int
      */
     public function getNumberOfChannelCalls()
     {
         return $this->numberOfChannelCalls;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfCloseCalls()
+    {
+        return $this->numberOfCloseCalls;
     }
 }

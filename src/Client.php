@@ -54,6 +54,9 @@ class Client
             new AMQPMessage($jsonRequest),
             $name
         );
+
+        $channel->close();
+        $this->connectionBridge->close();
     }
 
     /**

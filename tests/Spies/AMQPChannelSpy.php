@@ -12,6 +12,11 @@ class AMQPChannelSpy extends AMQPChannel
      */
     private $calls;
 
+    /**
+     * @var int
+     */
+    private $numberOfCloseCalls = 0;
+
     public function __construct()
     {
     }
@@ -43,11 +48,24 @@ class AMQPChannelSpy extends AMQPChannel
         ];
     }
 
+    public function close($reply_code = 0, $reply_text = '', $method_sig = array(0, 0))
+    {
+        $this->numberOfCloseCalls++;
+    }
+
     /**
      * @return array
      */
     public function getCalls()
     {
         return $this->calls;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfCloseCalls()
+    {
+        return $this->numberOfCloseCalls;
     }
 }

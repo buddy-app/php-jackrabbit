@@ -28,4 +28,8 @@ class AMQPConnectionBridge
     {
         return $this->connection->channel();
     }
+
+    public function close() {
+        $this->connection->close();
+    }
 }

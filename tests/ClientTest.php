@@ -103,4 +103,10 @@ class ClientTest extends TestCase
             $this->channelSpy->getCalls()
         );
     }
+
+    public function testClientCallsConnectionAndChannelCloseOnClientCall() {
+        $this->client->test();
+        $this->assertSame(1, $this->connectionBridgeSpy->getNumberOfCloseCalls());
+        $this->assertSame(1, $this->channelSpy->getNumberOfCloseCalls());
+    }
 }
