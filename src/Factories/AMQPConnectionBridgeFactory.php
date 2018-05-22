@@ -3,32 +3,27 @@
 namespace Jackrabbit\Factories;
 
 use Jackrabbit\Bridges\AMQPConnectionBridge;
-use Jackrabbit\Entities\ConnectionParameters;
 
 class AMQPConnectionBridgeFactory
 {
     /**
-     * @var ConnectionParameters
+     * @var AMQPConnectionFactory
      */
-    private $connectionParameters;
+    private $connectionFactory;
 
     /**
-     * @param ConnectionParameters $connectionParameters
+     * @param AMQPConnectionFactory $connectionFactory
      */
-    public function __construct(ConnectionParameters $connectionParameters)
+    public function __construct(AMQPConnectionFactory $connectionFactory)
     {
-        $this->connectionParameters = $connectionParameters;
+        $this->connectionFactory = $connectionFactory;
     }
 
     /**
      * @return AMQPConnectionBridge
      */
-    public function build(){
-        return new AMQPConnectionBridge(
-            $this->connectionParameters->host,
-            $this->connectionParameters->port,
-            $this->connectionParameters->user,
-            $this->connectionParameters->password
-        );
+    public function build()
+    {
+        return new AMQPConnectionBridge($this->connectionFactory);
     }
 }

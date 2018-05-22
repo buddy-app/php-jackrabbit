@@ -3,14 +3,18 @@
 namespace Jackrabbit\Tests\Spies;
 
 use Jackrabbit\Bridges\AMQPConnectionBridge;
-use Jackrabbit\Entities\ConnectionParameters;
 use Jackrabbit\Factories\AMQPConnectionBridgeFactory;
-use Jackrabbit\Tests\Stubs\AMQPConnectionBridgeStub;
 
 class AMQPConnectionBridgeFactorySpy extends AMQPConnectionBridgeFactory
 {
-    public function __construct()
+    /**
+     * @var AMQPConnectionBridge
+     */
+    public $connectionBridge;
+
+    public function __construct(AMQPConnectionBridge $connectionBridge)
     {
+        $this->connectionBridge = $connectionBridge;
     }
 
     /**
@@ -25,7 +29,7 @@ class AMQPConnectionBridgeFactorySpy extends AMQPConnectionBridgeFactory
     {
         $this->numberOfBuildCalls++;
 
-        return new AMQPConnectionBridgeStub();
+        return $this->connectionBridge;
     }
 
     /**

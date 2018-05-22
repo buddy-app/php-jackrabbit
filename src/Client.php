@@ -1,8 +1,10 @@
 <?php
 
 namespace Jackrabbit;
+
 use Jackrabbit\Bridges\AMQPConnectionBridge;
 use Jackrabbit\Factories\AMQPConnectionBridgeFactory;
+use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * Jackrabbit client
@@ -41,6 +43,17 @@ class Client
     public function __call($name, $arguments)
     {
         $this->lastMethod = $name;
+        $channel = $this->connectionBridge->channel();
+
+        $jsonRequest =
+            0 === count($arguments)
+                ? null
+                : json_encode($arguments[0]);
+
+        $channel->basic_publish(
+            new AMQPMessage($jsonRequest),
+            $name
+        );
     }
 
     /**

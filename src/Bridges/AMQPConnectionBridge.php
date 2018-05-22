@@ -2,71 +2,30 @@
 
 namespace Jackrabbit\Bridges;
 
+use Jackrabbit\Factories\AMQPConnectionFactory;
+use PhpAmqpLib\Channel\AMQPChannel;
+use PhpAmqpLib\Connection\AbstractConnection;
+
 class AMQPConnectionBridge
 {
     /**
-     * @var string
+     * @var AbstractConnection
      */
-    private $host;
+    private $connection;
 
     /**
-     * @var string
+     * @param AMQPConnectionFactory $connectionFactory
      */
-    private $password;
-
-    /**
-     * @var string
-     */
-    private $port;
-
-    /**
-     * @var string
-     */
-    private $user;
-
-    /**
-     * @param string $host
-     * @param string $port
-     * @param string $user
-     * @param string $password
-     */
-    public function __construct($host, $port, $user, $password)
+    public function __construct(AMQPConnectionFactory $connectionFactory)
     {
-        $this->host = $host;
-        $this->password = $password;
-        $this->port = $port;
-        $this->user = $user;
+        $this->connection = $connectionFactory->build();
     }
 
     /**
-     * @return string
+     * @return AMQPChannel
      */
-    public function getHost()
+    public function channel()
     {
-        return $this->host;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPort()
-    {
-        return $this->port;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUser()
-    {
-        return $this->user;
+        return $this->connection->channel();
     }
 }

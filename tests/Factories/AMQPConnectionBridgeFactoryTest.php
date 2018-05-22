@@ -5,6 +5,7 @@ namespace Jackrabbit\Tests;
 use Jackrabbit\Bridges\AMQPConnectionBridge;
 use Jackrabbit\Entities\ConnectionParameters;
 use Jackrabbit\Factories\AMQPConnectionBridgeFactory;
+use Jackrabbit\Tests\Spies\AMQPConnectionFactorySpy;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,6 +17,11 @@ class AMQPConnectionBridgeFactoryTest extends TestCase
     const PASSWORD = 'Doe';
     const PORT = '1234';
     const USER = 'John';
+
+    /**
+     * @var AMQPConnectionFactorySpy
+     */
+    private $connectionFactorySpy;
 
     /**
      * @var ConnectionParameters
@@ -35,22 +41,21 @@ class AMQPConnectionBridgeFactoryTest extends TestCase
         $this->connectionParameters->port = static::PORT;
         $this->connectionParameters->user = static::USER;
 
-        $this->factory = new AMQPConnectionBridgeFactory($this->connectionParameters);
+        $this->connectionFactorySpy = new AMQPConnectionFactorySpy($this->connectionParameters);
+        $this->factory = new AMQPConnectionBridgeFactory($this->connectionFactorySpy);
     }
 
-    public function testFactoryReturnsAnInstanceOfAMQPConnectionBridge(){
+    public function testFactoryReturnsAnInstanceOfAMQPConnectionBridge()
+    {
         $this->assertInstanceOf(
             AMQPConnectionBridge::class,
             $this->factory->build()
         );
     }
 
-    public function testFactoryAppliesConnectionParametersOnNewInstance()
+    public function testFactoryBuildsConnectionFromGivenConnectionFactory()
     {
-        $connectionBridge = $this->factory->build();
-        $this->assertSame(static::HOST, $connectionBridge->getHost());
-        $this->assertSame(static::PASSWORD, $connectionBridge->getPassword());
-        $this->assertSame(static::PORT, $connectionBridge->getPort());
-        $this->assertSame(static::USER, $connectionBridge->getUser());
+        $this->factory->build();
+        $this->assertSame($this->connectionParameters, $this->connectionFactorySpy->getConnectionParameters());
     }
 }
