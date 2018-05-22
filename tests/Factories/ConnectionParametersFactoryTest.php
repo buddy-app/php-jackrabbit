@@ -32,15 +32,13 @@ class ConnectionParametersFactoryTest extends TestCase
      * @param string $expectedPassword
      * @param string $expectedHost
      * @param string $expectedPort
-     * @param string $expectedVirtualHost
      */
     public function testFactoryBuildsConnectionParametersFromConnectionString(
         $connectionString,
         $expectedUser,
         $expectedPassword,
         $expectedHost,
-        $expectedPort,
-        $expectedVirtualHost
+        $expectedPort
     ){
         $connectionParameters = $this->factory->build($connectionString);
 
@@ -58,14 +56,17 @@ class ConnectionParametersFactoryTest extends TestCase
      */
     public function getDataProviderForBuildTests(){
         return [
-            ['', '', '', '', '', ''],
-            ['ampq://', '', '', '', '', ''],
-            ['amqp://', '', '', '', '', ''],
-            ['amqp://[::1]', '', '', '[::1]', '', ''],
-            ['amqp://mr:x@', 'mr', 'x', '', '', ''],
-            ['amqp://mrs:y@rabbitmqserver', 'mrs', 'y', 'rabbitmqserver', '', ''],
-            ['amqp://mrss:yy@rabbitmrserver:', 'mrss', 'yy', 'rabbitmrserver', '', ''],
-            ['amqp://mrss:yy@rabbitmrserver:54321', 'mrss', 'yy', 'rabbitmrserver', '54321', ''],
+            ['', '', '', '', ''],
+            ['ampq://', '', '', '', ''],
+            ['amqp://', '', '', '', ''],
+            ['amqp://user@', 'user', '', '', ''],
+            ['amqp://[::1]', '', '', '[::1]', ''],
+            ['amqp://host', '', '', 'host', ''],
+            ['amqp://:15000', '', '', '', '15000'],
+            ['amqp://mr:x@', 'mr', 'x', '', ''],
+            ['amqp://mrs:y@rabbitmqserver', 'mrs', 'y', 'rabbitmqserver', ''],
+            ['amqp://mrss:yy@rabbitmrserver:', 'mrss', 'yy', 'rabbitmrserver', ''],
+            ['amqp://mrss:yy@rabbitmrserver:54321', 'mrss', 'yy', 'rabbitmrserver', '54321']
         ];
     }
 }

@@ -31,10 +31,13 @@ class ConnectionParametersFactory
      */
     private function getUsernameFromConnectionString($connectionString)
     {
+        $credentials = $this->getCredentialsFromConnectionString($connectionString);
+
         return $this->getRegexGroupValue(
             static::REGEX_TUPLE,
-            $this->getCredentialsFromConnectionString($connectionString),
-            [1]
+            $credentials,
+            [1],
+            $credentials
         );
     }
 
